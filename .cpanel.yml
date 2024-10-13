@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/konilncu/public_html
+    - /bin/rsync -av --exclude='.git' --exclude='.env' --exclude='*.md' ./ $DEPLOYPATH

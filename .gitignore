@@ -1,0 +1,27 @@
+# Ignore node_modules and vendor directories
+/vendor/
+/node_modules/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore environment and sensitive files
+.env
+*.env
+
+# Ignore composer dependencies
+composer.lock
+
+# Ignore PHPStorm meta files
+/.phpstorm.meta.php
+
+# Ignore logs and temporary files
+/logs
+/tmp
+*.log
+*.cache
