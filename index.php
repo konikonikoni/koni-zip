@@ -1,2 +1,3 @@
 <?php
-echo 'Hello koni :) Test 4';
+echo "Hello, this is a test!";
+?>
