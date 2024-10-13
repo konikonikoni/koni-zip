@@ -1,1 +1,31 @@
+# Use index.php as default
 DirectoryIndex index.php
+
+# Prevent directory listing
+Options -Indexes
+
+# Prevent access to .htaccess and other sensitive files
+<Files .htaccess>
+  Order allow,deny
+  Deny from all
+</Files>
+
+# Prevent access to Git and other version control files
+<FilesMatch "^\.git">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Block access to XML-RPC files (for WordPress security)
+<Files xmlrpc.php>
+  Order allow,deny
+  Deny from all
+</Files>
+
+# Rewrite rules (optional for URL routing, like WordPress, Laravel, etc.)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.php [L]
+</IfModule>
