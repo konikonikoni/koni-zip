@@ -23,8 +23,8 @@ $request = trim($_SERVER['REQUEST_URI'], '/');
                     <input type="password" placeholder="password" id="password" name="password">
                     <input type="password" placeholder="retype password" id="retype_password" name="retype_password">
                     <div id="submit">
-                        <input type="submit" value="Sign up">
-                        <input type="button" value="Already signed up" onclick="location.href='/'">
+                        <input type="submit" value="Sign Up">
+                        <input type="button" value="Log In" onclick="location.href='/'">
                     </div>
                 </form>
             </div>
@@ -35,7 +35,7 @@ $request = trim($_SERVER['REQUEST_URI'], '/');
                     <input type="password" placeholder="password" id="password" name="password">
                     <div id="submit">
                         <input type="submit" value="Log In">
-                        <input type="button" value="Sign up" onclick="location.href='/register'">
+                        <input type="button" value="Sign Up" onclick="location.href='/register'">
                     </div>
                 </form>
             </div>
