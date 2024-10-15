@@ -29,3 +29,9 @@ Options -Indexes
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ index.php [L]
 </IfModule>
+
+# Block access to database config file
+<Files "config.php">
+Order allow,deny
+Deny from all
+</Files>
