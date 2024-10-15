@@ -1,4 +1,6 @@
 <?php
+// Get the current request URI
+$request = trim($_SERVER['REQUEST_URI'], '/');
 ?>
 
 <!DOCTYPE html>
@@ -6,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>koni.zip</title>
 </head>
 <body>
@@ -41,15 +43,28 @@
                 <rect x="46" y="75" width="5" height="2.5" fill="black"/>
             </svg>
         </div>
-        <div id="login">
-            <form>
-                <input type="text" placeholder="username" id="username" name="username">
-                <input type="password" placeholder="password" id="password" name="password">
-                <div id="submit">
-                    <input type="submit">
-                </div>
-            </form>
-        </div>
+        <?php if ($request === 'register'): ?>
+            <div id="register">
+                <form>
+                    <input type="text" placeholder="username" id="username" name="username">
+                    <input type="password" placeholder="password" id="password" name="password">
+                    <input type="password" placeholder="password" id="password" name="password">
+                    <div id="submit">
+                        <input type="submit" value="Sign Up">
+                    </div>
+                </form>
+            </div>
+        <?php else: ?>
+            <div id="login">
+                <form>
+                    <input type="text" placeholder="username" id="username" name="username">
+                    <input type="password" placeholder="password" id="password" name="password">
+                    <div id="submit">
+                        <input type="submit" value="Log In">
+                    </div>
+                </form>
+            </div>
+        <?php endif; ?>
     </main>
 </body>
 </html>
