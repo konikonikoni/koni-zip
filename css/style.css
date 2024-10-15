@@ -29,6 +29,5 @@ input {
 }
 
 #submit {
-    display: grid;
-    place-items: center;
+    display: flex;
 }
