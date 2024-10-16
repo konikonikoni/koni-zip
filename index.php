@@ -21,6 +21,7 @@ $request = trim($_SERVER['REQUEST_URI'], '/');
                 <form method="POST" action="/forms/register.php">
                     <input type="text" placeholder="username" id="username" name="username">
                     <input type="password" placeholder="password" id="password" name="password">
+                    <input type="password" placeholder="retype password" id="retype_password" name="retype_password">
                     <div id="submit">
                         <input type="submit" value="Sign Up">
                         <input type="button" value="Log In" onclick="location.href='/'">
@@ -29,7 +30,7 @@ $request = trim($_SERVER['REQUEST_URI'], '/');
             </div>
         <?php else: ?>
             <div id="login">
-                <form method="POST">
+                <form method="POST" action="/forms/login.php">
                     <input type="text" placeholder="username" id="username" name="username">
                     <input type="password" placeholder="password" id="password" name="password">
                     <div id="submit">
