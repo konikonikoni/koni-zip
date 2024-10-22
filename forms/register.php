@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/db_connect.php';
 require_once __DIR__ . '/../includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['username']) && !empty($_POST['password'])) {
+    if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['retype_password'])) {
         if ($_POST['password'] === $_POST['retype_password']) {
             $username = htmlspecialchars($_POST['username']);
             $password = $_POST['password'];
@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             handleError('/register', 'Passwords do not match!');
         }
+    } else {
+        handleError('index.php', 'Required parameters missing.');
     }
 }
 $conn->close();

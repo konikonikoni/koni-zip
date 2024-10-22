@@ -1,16 +1,25 @@
 <?php
 session_start();
+require_once __DIR__ . '/../includes/db_connect.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    // If not, redirect to the login page
     header("Location: /index.php");
     exit();
 }
 
-// Get role from $_SESSION
+// Get role and username from the session
 $role = htmlspecialchars($_SESSION['role']);
 $username = htmlspecialchars($_SESSION['username']);
 
-echo "Welcome to your dashboard, " . $username;
-echo "<a href='../actions/logout.php'>Logout</a>";
+// Include the header
+include '../views/header.php';
+
+// Include the affiliate list module
+include '../modules/affiliate_list.php';
+
+// Include the footer
+include '../views/footer.php';
+
+$conn->close();
+?>
