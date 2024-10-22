@@ -16,23 +16,11 @@ include '../views/header.php';
         <input type="text" id="list_name" name="list_name" required><br>
 
         <!-- Add multiple items dynamically via JavaScript -->
-        <div id="item-container">
-            <div class="item">
-                <label for="position">Position:</label>
-                <input type="number" name="position[]" required><br>
-
-                <label for="name">Name:</label>
-                <input type="text" name="name[]" required><br>
-
-                <label for="link">Link:</label>
-                <input type="url" name="link[]" required><br>
-
-                <label for="description">Description:</label>
-                <textarea name="description[]"></textarea><br>
-            </div>
+        <div id="new-item-container">
+            <!-- New items will be added here dynamically -->
         </div>
 
-        <button type="button" onclick="addNewItem()">Add Another Item</button><br>
+        <button type="button" onclick="addNewItem()">Add Item</button><br>
         <input type="submit" class="button button-green" value="Create List">
     </form>
 

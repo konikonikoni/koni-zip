@@ -13,25 +13,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $list_id = $conn->insert_id;  // Get the newly created list ID
 
-    // Insert each item in the list
-    $positions = $_POST['position'];
-    $names = $_POST['name'];
-    $links = $_POST['link'];
-    $descriptions = $_POST['description'];
+    // Check if items are provided
+    if (isset($_POST['new_name']) && !empty($_POST['new_name'])) {
+        // Insert each item in the list
+        $positions = $_POST['new_position'];
+        $names = $_POST['new_name'];
+        $links = $_POST['new_link'];
+        $descriptions = $_POST['new_description'];
 
-    for ($i = 0; $i < count($names); $i++) {
-        $position = $positions[$i];
-        $name = htmlspecialchars($names[$i]);
-        $link = htmlspecialchars($links[$i]);
-        $description = htmlspecialchars($descriptions[$i]);
+        for ($i = 0; $i < count($names); $i++) {
+            $position = $positions[$i];
+            $name = htmlspecialchars($names[$i]);
+            $link = htmlspecialchars($links[$i]);
+            $description = htmlspecialchars($descriptions[$i]);
 
-        $stmt = $conn->prepare("INSERT INTO affiliate_items (list_id, position, name, link, description) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param('iisss', $list_id, $position, $name, $link, $description);
-        $stmt->execute();
+            $stmt = $conn->prepare("INSERT INTO affiliate_items (list_id, position, name, link, description) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param('iisss', $list_id, $position, $name, $link, $description);
+            $stmt->execute();
+        }
     }
 
+    // Redirect back to the dashboard with a success message
     redirect('../views/dashboard.php', "Affiliate list created successfully!");
 }
 
 $stmt->close();
 $conn->close();
+?>
