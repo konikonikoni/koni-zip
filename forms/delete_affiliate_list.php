@@ -1,34 +1,42 @@
 <?php
 session_start();
-include '../includes/db_connect.php';
+require_once '../includes/db_connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['list_id'])) {
-    $list_id = $_POST['list_id'];
-
-    // Check if the list belongs to the logged-in user
-    $stmt = $conn->prepare("SELECT * FROM affiliate_lists WHERE list_id = ? AND user_id = ?");
-    $stmt->bind_param('ii', $list_id, $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        // Delete the list and all associated items
-        $stmt = $conn->prepare("DELETE FROM affiliate_lists WHERE list_id = ?");
-        $stmt->bind_param('i', $list_id);
-        $stmt->execute();
-
-        // Optionally, you can delete associated affiliate items in a single step if there's a foreign key constraint
-        // DELETE FROM affiliate_items WHERE list_id = ?;
-
-        echo "List deleted successfully.";
-    } else {
-        echo "You are not authorized to delete this list.";
-    }
-
-    $stmt->close();
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /index.php");
+    exit();
 }
-$conn->close();
 
-// Redirect back to the dashboard
-header("Location: /views/dashboard.php");
-exit();
+$role = $_SESSION['role']; // Get the user's role
+$list_id = $_POST['list_id']; // Get the list ID to delete
+
+// If the user is an admin, they can delete any list
+if ($role === 'admin') {
+    // Admin can delete any list
+    $stmt = $conn->prepare("DELETE FROM affiliate_lists WHERE list_id = ?");
+    $stmt->bind_param('i', $list_id);
+} else {
+    // Non-admin users can only delete their own lists
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("DELETE FROM affiliate_lists WHERE list_id = ? AND user_id = ?");
+    $stmt->bind_param('ii', $list_id, $user_id);
+}
+
+// Execute the query
+if ($stmt->execute()) {
+    // Optionally, delete associated items in affiliate_items
+    $stmt_items = $conn->prepare("DELETE FROM affiliate_items WHERE list_id = ?");
+    $stmt_items->bind_param('i', $list_id);
+    $stmt_items->execute();
+
+    // Redirect to the dashboard after successful deletion
+    header("Location: /views/dashboard.php?message=List deleted successfully");
+} else {
+    // Handle failure to delete
+    echo "Failed to delete the list.";
+}
+
+$stmt->close();
+$conn->close();
+?>

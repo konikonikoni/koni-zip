@@ -25,3 +25,20 @@ function removeNewItem(button) {
     let item = button.parentElement;
     item.remove();
 }
+
+function markForDeletion(button) {
+    let itemDiv = button.closest('.item'); // Get the item div
+
+    // Add a hidden input to mark this item for deletion
+    let itemId = itemDiv.getAttribute('data-item-id');
+    let deleteInput = document.createElement('input');
+    deleteInput.type = 'hidden';
+    deleteInput.name = 'delete_item[]';
+    deleteInput.value = itemId;
+
+    // Append the hidden input to the form
+    document.querySelector('form').appendChild(deleteInput);
+
+    // Visually hide the item
+    itemDiv.style.display = 'none';
+}

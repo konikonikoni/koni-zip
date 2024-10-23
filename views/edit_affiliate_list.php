@@ -10,7 +10,7 @@ $username = htmlspecialchars($_SESSION['username']); // Get the username for gre
 // Include the header after fetching the username
 include '../views/header.php';
 
-// Prepare the SQL query differently based on the role
+// Prepare the SQL query based on the role
 if ($role === 'admin') {
     // Admin can edit any list
     $stmt = $conn->prepare("SELECT affiliate_lists.*, users.username AS creator FROM affiliate_lists JOIN users ON affiliate_lists.user_id = users.id WHERE list_id = ?");
@@ -52,7 +52,7 @@ if ($list_result->num_rows === 1) {
         <h3>Edit Existing Items</h3>
         <div id="item-container">
             <?php while ($item = $items_result->fetch_assoc()): ?>
-                <div class="item">
+                <div class="item" data-item-id="<?php echo $item['item_id']; ?>">
                     <input type="hidden" name="item_id[]" value="<?php echo $item['item_id']; ?>">
 
                     <label for="position">Position:</label>
@@ -66,10 +66,14 @@ if ($list_result->num_rows === 1) {
 
                     <label for="description">Description:</label>
                     <textarea name="description[]"><?php echo htmlspecialchars($item['description']); ?></textarea><br>
+
+                    <!-- Delete button -->
+                    <button type="button" class="delete-btn" onclick="markForDeletion(this)">Delete</button>
                 </div>
             <?php endwhile; ?>
         </div>
 
+        <h3>Add New Items</h3>
         <div id="new-item-container">
             <!-- New items will be added here dynamically -->
         </div>
@@ -85,5 +89,5 @@ $stmt->close();
 $conn->close();
 
 // Include the footer
-include '../views/footer.php';
+include __DIR__ . '/../views/footer.php';
 ?>
